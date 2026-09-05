@@ -2,6 +2,7 @@ const $=s=>document.querySelector(s), products=window.STORE_PRODUCTS||[];
 let cart=JSON.parse(localStorage.getItem('oner-cart')||'[]');
 const money=n=>'£'+Number(n||0).toFixed(2), esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const image=(p,n=0)=>p.images[n]||p.variants.find(v=>v.image)?.image||'';
+window.buildMolipyUrl=(baseUrl,sourceId,items)=>{const params=new URLSearchParams({source_id:sourceId});items.forEach((item,index)=>{const selection=[item.productName,item.model||item.color,item.size].filter(Boolean).join(' ');params.set(`adv${index+1}`,`${selection}___${item.imageUrl}`)});return `${baseUrl}?${params.toString()}`};
 function card(p){return `<article class="card"><a href="#/product/${p.handle}"><div class="image-wrap"><img loading="lazy" src="${image(p)}" alt="${esc(p.title)}"><span class="badge">${p.compareAt>p.price?'SALE':'NEW'}</span><span class="wish">♡</span></div><h3>${esc(p.title)}</h3><div class="colour">${esc(p.colour)}</div><div class="price">${money(p.price)}${p.compareAt>p.price?`<span class="old">${money(p.compareAt)}</span>`:''}</div></a></article>`}
 function matching(term){term=(term||'').toLowerCase();return products.filter(p=>[p.title,p.type,p.vendor,p.colour,...p.tags,...p.collections].join(' ').toLowerCase().includes(term))}
 const pick=(term,n=8)=>matching(term).slice(0,n);
