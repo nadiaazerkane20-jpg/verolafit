@@ -1,6 +1,6 @@
 (function(){
   const replacements=[
-    ['BUILT FOR STRENGTH','GEMAAKT VOOR KRACHT'],['Made for every shake and hold — movement that feels like you.','Gemaakt voor elke beweging — sportkleding waarin jij je goed voelt.'],['SHOP NOW','SHOP NU'],
+    ['Unisex Half-Crew Throwback Sock','Unisex Half-Crew Throwback sokken'],['20 colours','20 kleuren'],['BUILT FOR STRENGTH','GEMAAKT VOOR KRACHT'],['Made for every shake and hold — movement that feels like you.','Gemaakt voor elke beweging — sportkleding waarin jij je goed voelt.'],['SHOP NOW','SHOP NU'],
     ['NEW RELEASES','NIEUWE ITEMS'],['Explore our latest products','Ontdek onze nieuwste producten'],['Shop all','Bekijk alles'],['OWN YOUR JOURNEY','VOLG JOUW EIGEN PAD'],['Stories of Strength Capsule','Stories of Strength-collectie'],['BUILD YOUR WISHLIST','MAAK JE VERLANGLIJST'],
     ['BEST SELLERS','BESTSELLERS'],['Your favourites, right here','Jouw favorieten op één plek'],['SHOP BY CATEGORY','SHOP PER CATEGORIE'],['Find your movement essential','Vind jouw onmisbare sportitems'],['JUST FOR YOU','SPECIAAL VOOR JOU'],['Our top recommendations','Onze beste aanbevelingen'],
     ['products','producten'],['Search this collection','Zoek in deze collectie'],['Featured','Uitgelicht'],['Price: low to high','Prijs: laag naar hoog'],['Price: high to low','Prijs: hoog naar laag'],['All categories','Alle categorieën'],
@@ -19,7 +19,7 @@
     ['Free 48-hour shipping','Gratis verzending binnen 48 uur'],['Every UK order qualifies for free delivery, dispatched for arrival within 48 hours.','Elke Nederlandse bestelling wordt gratis verzonden en binnen 48 uur bezorgd.'],['Free 60-day returns','60 dagen gratis retourneren'],['Try it at home for 60 days. Returns are free and refunded with no questions asked.','Probeer het 60 dagen thuis. Retourneren is gratis en je krijgt zonder vragen je geld terug.'],
     ['YOUR SHOPPING BAG','JE WINKELMAND'],['Your shopping bag is empty.','Je winkelmand is leeg.'],['Remove','Verwijderen'],['Subtotal','Subtotaal'],['CHECKOUT','AFREKENEN'],['Added to your bag','Toegevoegd aan je winkelmand'],['Please select an available size','Kies een beschikbare maat'],['PAGE NOT FOUND','PAGINA NIET GEVONDEN'],['That page moved faster than we did.','Deze pagina is niet meer beschikbaar.'],['BACK HOME','TERUG NAAR HOME']
   ];
-  const euroValue=value=>{const n=Number(value)||0;return n===26?29.95:n===25?29.95:n===17?19.99:Math.round(n*1.16)};
+  const euroValue=value=>{const n=Number(value)||0;return n===9?9.99:n===26?29.95:n===25?29.95:n===17?19.99:Math.round(n*1.16)};
   const euroMoney=value=>`${euroValue(value).toLocaleString('nl-NL',{minimumFractionDigits:2,maximumFractionDigits:2})} €`;
   const convertPounds=html=>String(html).replace(/£\s*([\d,]+(?:\.\d+)?)/g,(_,raw)=>euroMoney(Number(raw.replace(/,/g,''))));
   const translateHtml=html=>convertPounds(replacements.reduce((s,[a,b])=>s.split(a).join(b),html));
