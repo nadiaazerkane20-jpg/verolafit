@@ -19,8 +19,8 @@
     ['PAGE NOT FOUND','SEITE NICHT GEFUNDEN'],['That page moved faster than we did.','Diese Seite ist nicht mehr verfügbar.'],['BACK HOME','ZUR STARTSEITE'],
     ['Full Length','Lang'],['Cropped','Kurz'],['Two fits · multiple colours','Zwei Passformen · mehrere Farben'],['7 colours','7 Farben']
   ];
-  const chfValue=value=>{const n=Number(value)||0;if(n===9)return 9.95;if(n===13)return 14.95;if(n===17)return 19.95;if(n===25||n===26)return 29.95;return Math.round(n*1.15*20)/20};
-  const chfMoney=value=>'CHF '+chfValue(value).toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const chfValue=value=>{const n=Number(value)||0;if(n===9)return 10;if(n===13)return 15;if(n===17)return 19;if(n===25||n===26)return 29;return Math.round(n*1.15*20)/20};
+  const chfMoney=value=>'CHF '+chfValue(value).toLocaleString('de-CH',{maximumFractionDigits:2});
   const convertPounds=html=>String(html).replace(/£\s*([\d,]+(?:\.\d+)?)/g,(_,raw)=>chfMoney(Number(raw.replace(/,/g,''))));
   const translateHtml=html=>convertPounds(replacements.reduce((value,pair)=>value.split(pair[0]).join(pair[1]),String(html)));
   const exact={'NEW':'NEU','SALE':'SALE','SHORTS':'SHORTS','BRAS':'SPORT-BHS','LEGGINGS':'LEGGINGS','TOPS':'TOPS','PANTS':'HOSEN','HOODIES':'HOODIES','ACCESSORIES':'ACCESSOIRES','DRESSES':'KLEIDER','Maat':'Grösse','Size':'Grösse'};
@@ -42,7 +42,7 @@
     'size-guide':['EU-GRÖSSENTABELLE','Entdecke die europäischen Grössen XS bis XXL mit den entsprechenden Körpermassen. Alle Produkte können 60 Tage kostenlos zurückgegeben werden.']
   };
   const baseHome=home,baseCollection=collection,baseProductPage=productPage,baseNotFound=notFound,baseBindPage=bindPage,baseRenderCart=renderCart;
-  home=()=>translateHtml(baseHome());
+  home=()=>'<section class="ch-market-banner"><span aria-hidden="true">🇨🇭</span><div><small>VEROLAFIT SCHWEIZ</small><b>SCHWEIZER ONLINE-SHOP</b><p>Kostenlose Lieferung in der Schweiz innerhalb von 48 Stunden · Preise in CHF · 60 Tage kostenlose Rückgabe</p></div></section>'+translateHtml(baseHome());
   collection=slug=>translateHtml(baseCollection(slug));
   productPage=handle=>translateHtml(baseProductPage(handle));
   notFound=()=>translateHtml(baseNotFound());
