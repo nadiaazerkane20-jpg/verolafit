@@ -27,28 +27,28 @@
     const product=products.find(item=>item.handle==='unisex-half-crew-throwback-sock');
     const extraPairs=$('#sockExtraPairs');
     const renderExtraPairs=quantity=>{
-      extraPairs.className=quantity>1?'sock-extra-pairs':'';
-      extraPairs.innerHTML=Array.from({length:Math.max(0,quantity-1)},(_,offset)=>{
-        const pairNumber=offset+2,selected=product.colourData[offset+1]||product.colourData[0];
-        return `<div class="sock-pair-config" data-pair="${pairNumber}"><img src="${selected.images[0]}" alt="${esc(colourName(selected.name))}"><div class="sock-pair-fields"><strong>${t.pair} ${pairNumber}</strong><div class="sock-pair-row"><select class="sock-pair-colour" aria-label="${t.pair} ${pairNumber} — ${t.chooseColour}">${product.colourData.map(entry=>`<option value="${esc(entry.name)}" data-image="${entry.images[0]}" ${entry===selected?'selected':''}>${esc(colourName(entry.name))}</option>`).join('')}</select><div class="sock-pair-sizes">${['S','M','L'].map(size=>`<button class="sock-pair-size ${size==='M'?'active':''}" type="button" data-size="${size}">${size}</button>`).join('')}</div></div></div></div>`;
+      extraPairs.className='sock-extra-pairs';
+      extraPairs.innerHTML=Array.from({length:quantity},(_,offset)=>{
+        const pairNumber=offset+1,activeColour=$('.sock-colours .active')?.dataset.colour,selected=offset===0?product.colourData.find(entry=>entry.name===activeColour)||product.colourData[0]:product.colourData[offset]||product.colourData[0],activeSize=$('.sock-size.active')?.dataset.size||'M';
+        return `<div class="sock-pair-config" data-pair="${pairNumber}"><img src="${selected.images[0]}" alt="${esc(colourName(selected.name))}"><div class="sock-pair-fields"><strong>${t.pair} ${pairNumber}</strong><div class="sock-pair-row"><select class="sock-pair-colour" aria-label="${t.pair} ${pairNumber} — ${t.chooseColour}">${product.colourData.map(entry=>`<option value="${esc(entry.name)}" data-image="${entry.images[0]}" ${entry===selected?'selected':''}>${esc(colourName(entry.name))}</option>`).join('')}</select><div class="sock-pair-sizes">${['S','M','L'].map(size=>`<button class="sock-pair-size ${size===(offset===0?activeSize:'M')?'active':''}" type="button" data-size="${size}">${size}</button>`).join('')}</div></div></div></div>`;
       }).join('');
-      extraPairs.querySelectorAll('.sock-pair-colour').forEach(select=>select.onchange=()=>{const option=select.selectedOptions[0];select.closest('.sock-pair-config').querySelector('img').src=option.dataset.image});
-      extraPairs.querySelectorAll('.sock-pair-size').forEach(sizeButton=>sizeButton.onclick=()=>{const group=sizeButton.closest('.sock-pair-sizes');group.querySelectorAll('.sock-pair-size').forEach(item=>item.classList.remove('active'));sizeButton.classList.add('active')});
+      extraPairs.querySelectorAll('.sock-pair-colour').forEach(select=>select.onchange=()=>{const option=select.selectedOptions[0],pair=select.closest('.sock-pair-config');pair.querySelector('img').src=option.dataset.image;if(pair.dataset.pair==='1')document.querySelector(`.sock-colours [data-colour="${CSS.escape(select.value)}"]`)?.click()});
+      extraPairs.querySelectorAll('.sock-pair-size').forEach(sizeButton=>sizeButton.onclick=()=>{const group=sizeButton.closest('.sock-pair-sizes'),pair=sizeButton.closest('.sock-pair-config');group.querySelectorAll('.sock-pair-size').forEach(item=>item.classList.remove('active'));sizeButton.classList.add('active');if(pair.dataset.pair==='1')document.querySelector(`.sock-size[data-size="${sizeButton.dataset.size}"]`)?.click()});
     };
-    document.querySelectorAll('.sock-colours .colour-swatch').forEach(colourButton=>colourButton.onclick=()=>{document.querySelectorAll('.sock-colours .colour-swatch').forEach(item=>item.classList.remove('active'));colourButton.classList.add('active');$('.sock-colour-name').textContent=colourName(colourButton.dataset.colour);const images=JSON.parse(colourButton.dataset.images);$('.socks-gallery').innerHTML=images.slice(0,4).map((image,index)=>`<img src="${image}" alt="${t.title} ${colourName(colourButton.dataset.colour)} ${index+1}">`).join('')});
-    document.querySelectorAll('.sock-size').forEach(sizeButton=>sizeButton.onclick=()=>{document.querySelectorAll('.sock-size').forEach(item=>item.classList.remove('active'));sizeButton.classList.add('active')});
+    document.querySelectorAll('.sock-colours .colour-swatch').forEach(colourButton=>colourButton.onclick=()=>{document.querySelectorAll('.sock-colours .colour-swatch').forEach(item=>item.classList.remove('active'));colourButton.classList.add('active');$('.sock-colour-name').textContent=colourName(colourButton.dataset.colour);const images=JSON.parse(colourButton.dataset.images);$('.socks-gallery').innerHTML=images.slice(0,4).map((image,index)=>`<img src="${image}" alt="${t.title} ${colourName(colourButton.dataset.colour)} ${index+1}">`).join('');const pairOne=extraPairs.querySelector('[data-pair="1"]');if(pairOne){const select=pairOne.querySelector('.sock-pair-colour');select.value=colourButton.dataset.colour;pairOne.querySelector('img').src=colourButton.querySelector('img').src}});
+    document.querySelectorAll('.sock-size').forEach(sizeButton=>sizeButton.onclick=()=>{document.querySelectorAll('.sock-size').forEach(item=>item.classList.remove('active'));sizeButton.classList.add('active');const pairOne=extraPairs.querySelector('[data-pair="1"]');if(pairOne){pairOne.querySelectorAll('.sock-pair-size').forEach(item=>item.classList.toggle('active',item.dataset.size===sizeButton.dataset.size))}});
     document.querySelectorAll('.sock-pack').forEach(packButton=>packButton.onclick=()=>{document.querySelectorAll('.sock-pack').forEach(item=>item.classList.remove('active'));packButton.classList.add('active');$('.socks-price b').textContent=formatPrice(prices[localeCopy][Number(packButton.dataset.index)]);renderExtraPairs(Number(packButton.dataset.quantity))});
     const panel=$('#sockSizePanel'),close=()=>{panel.classList.remove('open');document.body.classList.remove('modal-open')};
     $('#sockSizeOpen').onclick=()=>{panel.classList.add('open');document.body.classList.add('modal-open')};
     $('#sockSizeClose').onclick=close;
     panel.onclick=event=>{if(event.target===panel)close()};
+    renderExtraPairs(1);
     const button=$('#addToCart');
     if(!button)return;
     button.onclick=()=>{
-      const colourButton=$('.sock-colours .active'),sizeButton=$('.sock-size.active'),packButton=$('.sock-pack.active');
-      if(!colourButton||!sizeButton||!packButton)return toast(localeCopy==='es'?'Selecciona el color, la talla y el pack':localeCopy==='nl'?'Kies de kleur, maat en het pakket':'Select a colour, size and pack');
-      const quantity=Number(packButton.dataset.quantity),tierIndex=Number(packButton.dataset.index),imageUrl=colourButton.querySelector('img')?.src;
-      const items=[{productName:'Unisex Half-Crew Throwback Sock',color:colourButton.dataset.colour,size:sizeButton.dataset.size,imageUrl}];
+      const packButton=$('.sock-pack.active');
+      if(!packButton)return toast(localeCopy==='es'?'Selecciona un pack':localeCopy==='nl'?'Kies een pakket':'Select a pack');
+      const quantity=Number(packButton.dataset.quantity),tierIndex=Number(packButton.dataset.index),items=[];
       extraPairs.querySelectorAll('.sock-pair-config').forEach(pair=>{const select=pair.querySelector('.sock-pair-colour'),option=select.selectedOptions[0],extraSize=pair.querySelector('.sock-pair-size.active');items.push({productName:'Unisex Half-Crew Throwback Sock',color:select.value,size:extraSize?.dataset.size,imageUrl:option.dataset.image})});
       if(items.length!==quantity||items.some(item=>!item.color||!item.size||!item.imageUrl))return toast(localeCopy==='es'?'Configura cada par antes de continuar':localeCopy==='nl'?'Stel elk paar samen voordat je doorgaat':'Configure every pair before continuing');
       location.href=buildMolipyUrl(checkoutUrls[tierIndex],'ALO-SOCKS',items);
