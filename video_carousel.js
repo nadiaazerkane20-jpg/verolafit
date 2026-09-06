@@ -1,6 +1,6 @@
 (function(){
   const baseProductPage=productPage,baseBindPage=bindPage;
-  const assetRoot=['es','nl'].includes(document.documentElement.lang)?'../assets':'assets';
+  const assetRoot=['es','nl','de-CH'].includes(document.documentElement.lang)?'../assets':'assets';
   const makeVideoSection=(prefix,eyebrow,title,subtitle,captions)=>`<section class="video-stories"><div class="video-stories-head"><div><small>${eyebrow}</small><h2>${title}</h2><p>${subtitle}</p></div><div class="video-nav"><button id="videoPrev" aria-label="Previous videos">←</button><button id="videoNext" aria-label="Next videos">→</button></div></div><div class="video-track" id="videoTrack">${[1,2,3,4].map((n,i)=>`<article class="video-card"><video preload="metadata" playsinline muted poster="${assetRoot}/video-posters/${prefix}-${n}.jpg"><source src="${assetRoot}/videos/${prefix}-${n}.mp4" type="video/mp4"></video><button class="video-play" aria-label="Play video ${n}"><span>▶</span></button><div class="video-caption"><b>${captions[i]}</b><small>${eyebrow.split(' ')[0]}</small></div></article>`).join('')}</div><div class="video-hint">Swipe to explore <span>→</span></div></section>`;
   const defineVideos=makeVideoSection('vero','VEROLAFIT COMMUNITY','MOVE WITH US','Real movement. Real confidence.',['Everyday sculpt','Made to move','Your strongest self','Confidence in motion']);
   const aloVideos=makeVideoSection('alo','ALO COMMUNITY','AIRBRUSH IN MOTION','The set, styled your way.',['The sculpting set','Studio to street','Soft support','Your matching moment']);
