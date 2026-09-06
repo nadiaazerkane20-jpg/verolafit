@@ -61,7 +61,7 @@ product = {
     'variants': variants,
     'options': ['Colour', 'Size'],
     'colourData': colour_data,
-    'packs': [{'quantity': 1, 'price': 9}, {'quantity': 3, 'price': 17}, {'quantity': 5, 'price': 26}],
+    'packs': [{'quantity': 1, 'price': 9}, {'quantity': 2, 'price': 13}, {'quantity': 3, 'price': 17}],
 }
 
 OUTPUT.write_text(
