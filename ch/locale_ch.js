@@ -1,6 +1,6 @@
 (function(){
   const replacements=[
-    ['Unisex Half-Crew Throwback Sock','Unisex Half-Crew Throwback Socken'],['20 colours','20 Farben'],
+    ['20 colours','20 Farben'],
     ['BUILT FOR STRENGTH','FÜR STÄRKE GEMACHT'],['Made for every shake and hold — movement that feels like you.','Für jede Bewegung gemacht — Activewear, die sich nach dir anfühlt.'],['SHOP NOW','JETZT SHOPPEN'],
     ['NEW RELEASES','NEUHEITEN'],['Explore our latest products','Entdecke unsere neuesten Produkte'],['Shop all','Alle ansehen'],['OWN YOUR JOURNEY','GEH DEINEN EIGENEN WEG'],['Stories of Strength Capsule','Stories of Strength Kollektion'],['BUILD YOUR WISHLIST','WUNSCHLISTE ERSTELLEN'],
     ['BEST SELLERS','BESTSELLER'],['Your favourites, right here','Deine Favoriten auf einen Blick'],['SHOP BY CATEGORY','NACH KATEGORIE SHOPPEN'],['Find your movement essential','Finde deine Activewear-Essentials'],['JUST FOR YOU','FÜR DICH'],['Our top recommendations','Unsere Empfehlungen'],
