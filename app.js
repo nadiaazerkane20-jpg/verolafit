@@ -7,7 +7,7 @@ const footerTrust=document.querySelector('.footer-trust-image');
 if(footerTrust&&!document.querySelector('.footer-app-promo')){
   const language=document.documentElement.lang,spanishPage=language==='es',dutchPage=language==='nl',promo=document.createElement('div');
   promo.className='footer-app-promo';
-  promo.innerHTML=dutchPage?'<div class="nl-app-promo"><small>Binnenkort beschikbaar</small><b>DE VEROLAFIT APP<br>KOMT ERAAN</b><span>Ontdek collecties, exclusieve aanbiedingen en je favorieten — overal en altijd.</span></div>':`<img src="${spanishPage?'../assets/footer-info-es.png':'assets/footer-info-uk.png'}" alt="${spanishPage?'La app de Verolafit llega pronto':'The Verolafit app is coming soon'}">`;
+  promo.innerHTML=dutchPage?'<img src="../assets/footer-info-nl.png" alt="De Verolafit-app komt binnenkort">':`<img src="${spanishPage?'../assets/footer-info-es.png':'assets/footer-info-uk.png'}" alt="${spanishPage?'La app de Verolafit llega pronto':'The Verolafit app is coming soon'}">`;
   footerTrust.insertAdjacentElement('afterend',promo);
 }
 function card(p){return `<article class="card"><a href="#/product/${p.handle}"><div class="image-wrap"><img loading="lazy" src="${image(p)}" alt="${esc(p.title)}"><span class="badge">${p.compareAt>p.price?'SALE':'NEW'}</span><span class="wish">♡</span></div><h3>${esc(p.title)}</h3><div class="colour">${esc(p.colour)}</div><div class="price">${money(p.price)}${p.compareAt>p.price?`<span class="old">${money(p.compareAt)}</span>`:''}</div></a></article>`}
