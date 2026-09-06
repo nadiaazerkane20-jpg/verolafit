@@ -20,7 +20,7 @@
     ['YOUR SHOPPING BAG','JE WINKELMAND'],['Your shopping bag is empty.','Je winkelmand is leeg.'],['Remove','Verwijderen'],['Subtotal','Subtotaal'],['CHECKOUT','AFREKENEN'],['Added to your bag','Toegevoegd aan je winkelmand'],['Please select an available size','Kies een beschikbare maat'],['PAGE NOT FOUND','PAGINA NIET GEVONDEN'],['That page moved faster than we did.','Deze pagina is niet meer beschikbaar.'],['BACK HOME','TERUG NAAR HOME']
   ];
   const euroValue=value=>{const n=Number(value)||0;return n===26?29.95:n===25?29.95:n===17?19.99:Math.round(n*1.16)};
-  const euroMoney=value=>euroValue(value).toLocaleString('nl-NL',{style:'currency',currency:'EUR'});
+  const euroMoney=value=>`${euroValue(value).toLocaleString('nl-NL',{minimumFractionDigits:2,maximumFractionDigits:2})} €`;
   const convertPounds=html=>String(html).replace(/£\s*([\d,]+(?:\.\d+)?)/g,(_,raw)=>euroMoney(Number(raw.replace(/,/g,''))));
   const translateHtml=html=>convertPounds(replacements.reduce((s,[a,b])=>s.split(a).join(b),html));
   const exactNl={'NEW':'NIEUW','SALE':'SALE','SHORTS':'SHORTS','BRAS':"SPORTBEHA'S",'LEGGINGS':'LEGGINGS','TOPS':'TOPS','PANTS':'BROEKEN','HOODIES':'HOODIES','ACCESSORIES':'ACCESSOIRES','DRESSES':'JURKEN','Full Length':'Lang model','Cropped':'Kort model','Two fits · multiple colours':'Twee modellen · meerdere kleuren','7 colours':'7 kleuren'};
